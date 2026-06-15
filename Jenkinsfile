@@ -3,20 +3,14 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/your-username/welcome-project.git'
+                url: 'https://github.com/px41529-maker/html_project.git'
             }
         }
 
-        stage('Verify Files') {
-            steps {
-                sh 'ls -la'
-            }
-        }
-
-        stage('Deploy to Apache') {
+        stage('Deploy') {
             steps {
                 sh '''
                 sudo cp index.html /var/www/html/
@@ -26,20 +20,16 @@ pipeline {
             }
         }
 
-        stage('Verify Deployment') {
+        stage('Verify') {
             steps {
-                sh 'curl http://localhost'
+                sh 'ls -l /var/www/html/'
             }
         }
     }
 
     post {
         success {
-            echo 'Application deployed successfully!'
-        }
-
-        failure {
-            echo 'Deployment failed!'
+            echo 'Website deployed successfully to EC2'
         }
     }
 }
